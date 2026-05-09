@@ -39,10 +39,10 @@ cancelButton.addEventListener("click", function () {
 var contactList = [];
 if (localStorage.getItem("contactContainer") !== null) {
   contactList = JSON.parse(localStorage.getItem("contactContainer"));
-  displayContact();
-  displaySidebar();
-  updateCounts();
 }
+displayContact();
+displaySidebar();
+updateCounts();
 
 saveButton.addEventListener("click", function () {
   if (isEditing) {
