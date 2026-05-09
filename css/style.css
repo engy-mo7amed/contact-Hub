@@ -1,0 +1,250 @@
+/* start global-rules  */
+:root {
+  --main-background: linear-gradient(
+    to right,
+    rgb(144, 70, 255),
+    rgb(109, 15, 250)
+  );
+  --main-shadow: 0 8px 10px -6px rgba(169, 169, 169, 0.558);
+}
+* {
+  font-family: "Inter", sans-serif;
+}
+input::placeholder,
+textarea::placeholder {
+  color: gray !important;
+  font-size: 0.875rem;
+}
+#inputSearch::placeholder {
+  padding-left: 30px !important ;
+}
+html {
+  scroll-behavior: smooth;
+}
+img {
+  max-width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+a {
+  text-decoration: none;
+}
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.navbar-collapse {
+  flex-grow: 0;
+}
+/* end global-rules  */
+
+/* start navbar  */
+.navbar .avatarImg {
+  width: 40px;
+}
+.navbar .title .icon {
+  padding: 10px;
+  background: var(--main-background);
+}
+.navbar .nav-icon {
+  transition: 0.3s;
+}
+.navbar .nav-icon:hover {
+  background-color: #f3f4f6;
+  color: rgb(73, 72, 72) !important;
+}
+.navbar .btn {
+  transition: 0.3s;
+}
+.navbar .btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 8px rgba(122, 2, 243, 0.277);
+}
+@media (max-width: 600px) {
+  .navbar .nav-icon,
+  .navbar .btn span {
+    display: none;
+  }
+}
+/* end navbar  */
+
+/* start inputsSection  */
+.inputsSection {
+  background: linear-gradient(rgba(0, 0, 0, 0.5));
+  backdrop-filter: blur(5px);
+}
+.inputsSection #Xmark {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: 0.2s;
+  color: rgb(145, 145, 145);
+}
+.inputsSection #Xmark:hover {
+  background-color: #f3f4f6;
+  color: rgb(90, 89, 89) !important;
+}
+.inputsSection .photo div {
+  padding: 30px;
+  width: fit-content;
+  border-radius: 50%;
+  background: linear-gradient(rgba(62, 143, 255), rgba(32, 109, 254));
+}
+.inputsSection .input-img,
+.inputsSection #cancelButton {
+  background-color: #f3f4f6;
+  transition: 0.3s;
+}
+.inputsSection .input-img:hover,
+.inputsSection #cancelButton:hover {
+  background-color: #e5e7eb;
+}
+.inputsSection .box {
+  height: 90%;
+  width: 500px;
+}
+.inputsSection .box::-webkit-scrollbar {
+  display: none;
+}
+.inputsSection #saveButton {
+  background: var(--main-background);
+  transition: 0.3s;
+}
+.inputsSection #saveButton:hover {
+  box-shadow: 0 5px 8px rgba(122, 2, 243, 0.277);
+}
+.inputsSection .form-control:focus,
+.inputsSection .form-select:focus,
+.search-container .form-control:focus {
+  background-color: white !important;
+  border: 2px solid #7f22fe !important;
+  box-shadow: 0 0 10px rgba(122, 2, 243, 0.277) !important;
+}
+.inputsSection input,
+.inputsSection textarea,
+.inputsSection select {
+  background-color: #f9fafb;
+  padding: 10px;
+}
+/* end inputsSection  */
+
+/* start main-section */
+.mainSection {
+  margin-top: 82px;
+  background-color: #f8fafc;
+}
+.mainSection .top-boxs .box .icon-1 {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(
+    to bottom,
+    rgba(38, 121, 255),
+    rgba(25, 100, 253)
+  );
+}
+.mainSection .top-boxs .box .icon-2 {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(to bottom, rgba(255, 173, 0), rgba(255, 117, 0));
+}
+.mainSection .top-boxs .box .icon-3 {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(to bottom, rgba(252, 25, 77), rgba(235, 0, 33));
+}
+.mainSection .top-boxs .box {
+  transition: 0.2s;
+}
+.mainSection .top-boxs .box:hover {
+  box-shadow: var(--main-shadow) !important;
+}
+.search-container input {
+  padding: 10px;
+}
+.profile-img {
+  width: 50px;
+  height: 50px;
+}
+.contact-boxs .box {
+  transition: 0.3s;
+}
+.contact-boxs .box:hover {
+  box-shadow: var(--main-shadow) !important;
+}
+#callBtn,
+#mailBtn,
+#emergencyBtn,
+#favBtn {
+  transition: 0.3s;
+}
+.favBtn:hover {
+  color: #ffb900 !important;
+  background-color: #f3f4f6 !important;
+}
+.active-fav:hover {
+  background-color: #fef3c6 !important;
+}
+.emergencyBtn:hover {
+  color: #ff2056 !important;
+  background-color: #f3f4f6 !important;
+}
+.active-emg:hover {
+  background-color: #ffe4e6 !important;
+}
+#editBtn:hover {
+  background-color: #eef2ff;
+  color: #4f39f6 !important;
+}
+#deleteBtn:hover {
+  background-color: #fff1f2;
+  color: #ec003f !important;
+}
+.favItemHTML,
+.emgItemHTML,
+.favItemHTML a,
+.emgItemHTML a {
+  transition: 0.3s;
+}
+.favItemHTML:hover {
+  background-color: #fffbeb !important;
+}
+.favItemHTML:hover a {
+  background-color: #00bc7d !important;
+  color: white !important;
+}
+.emgItemHTML:hover {
+  background-color: #fff1f2 !important;
+}
+.emgItemHTML:hover a {
+  color: white !important;
+  background-color: #ff2056 !important;
+}
+.contact-boxs .box {
+  display: flex;
+  flex-direction: column;
+}
+.contact-boxs .box .card-footer {
+  margin-top: auto;
+}
+.fav-contact > div:first-child {
+  border-radius: 12px 12px 0 0;
+}
+.fav-contact > div:last-child {
+  border-radius: 0 0 12px 12px;
+}
+.fav-contact,
+.emg-contact {
+  padding: 12px;
+  background-color: white;
+}
+.emg-contact > div:first-child {
+  border-radius: 12px 12px 0 0;
+}
+.emg-contact > div:last-child {
+  border-radius: 0 0 12px 12px;
+}
+/* end main-section */
