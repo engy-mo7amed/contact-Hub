@@ -71,6 +71,15 @@ function saveContact() {
     });
     return;
   }
+  if (mailInput.value.trim() && !validation(mailInput)) {
+    Swal.fire({
+      title: "Invalid Email",
+      text: "Please enter a valid email address!",
+      icon: "error",
+      confirmButtonText: "ok",
+    });
+    return;
+  }
 
   if (validation(nameInput) && validation(numInput)) {
     var randomIndex = Math.floor(Math.random() * avatarColors.length);
@@ -97,15 +106,25 @@ function saveContact() {
       title: "Added!",
       text: "contact has been added successfully👍",
       icon: "success",
-      confirmButtonText: "ok",
+      timer: 1500,
+      showConfirmButton: false,
     });
   } else {
-    Swal.fire({
-      title: "Missing",
-      text: "contact failed to added😒",
-      icon: "error",
-      confirmButtonText: "ok",
-    });
+    if (!validation(nameInput)) {
+      Swal.fire({
+        title: "Missing Name",
+        text: "Please enter a name for the contact!",
+        icon: "error",
+        confirmButtonText: "ok",
+      });
+    } else if (!validation(numInput)) {
+      Swal.fire({
+        title: "Missing Phone",
+        text: "Please enter a phone nummber!",
+        icon: "error",
+        confirmButtonText: "ok",
+      });
+    }
   }
 }
 
@@ -431,6 +450,8 @@ function updateCounts() {
   document.getElementById("totalNum").innerHTML = total;
   document.getElementById("favNum").innerHTML = favCount;
   document.getElementById("emgNum").innerHTML = emgCount;
+  document.getElementById("pragraph").innerHTML =
+    `Manage and organize your ${total} contacts`;
 }
 
 function deletecontact(i) {
@@ -476,7 +497,17 @@ function setcontact(i) {
 }
 
 function updateContact() {
-  if (validation(nameInput) && validation(numInput) && validation(mailInput)) {
+  if (mailInput.value.trim() && !validation(mailInput)) {
+    Swal.fire({
+      title: "Invalid Email",
+      text: "Please enter a valid email address!",
+      icon: "error",
+      confirmButtonText: "ok",
+    });
+    return;
+  }
+
+  if (validation(nameInput) && validation(numInput)) {
     var contact = {
       name: nameInput.value.trim(),
       num: numInput.value.trim(),
@@ -486,6 +517,7 @@ function updateContact() {
       notes: notesInput.value.trim(),
       check1: checkInput1.checked,
       check2: checkInput2.checked,
+      color: contactList[currentIndex].color,
     };
     contactList.splice(currentIndex, 1, contact);
     localStorage.setItem("contactContainer", JSON.stringify(contactList));
@@ -499,15 +531,25 @@ function updateContact() {
       title: "Updated!",
       text: "contact has been added successfully👍",
       icon: "success",
-      confirmButtonText: "ok",
+      timer: 1500,
+      showConfirmButton: false,
     });
   } else {
-    Swal.fire({
-      title: "Missing",
-      text: "contact failed to added😒",
-      icon: "error",
-      confirmButtonText: "ok",
-    });
+    if (!validation(nameInput)) {
+      Swal.fire({
+        title: "Missing Name",
+        text: "Please enter a name for the contact!",
+        icon: "error",
+        confirmButtonText: "ok",
+      });
+    } else if (!validation(numInput)) {
+      Swal.fire({
+        title: "Missing Phone",
+        text: "Please enter a phone number!",
+        icon: "error",
+        confirmButtonText: "ok",
+      });
+    }
   }
 }
 
