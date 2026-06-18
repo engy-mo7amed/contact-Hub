@@ -1,19 +1,19 @@
-var addContactBtn = document.getElementById("addContact");
-var inputsSection = document.getElementById("inputsSection");
-var closeInputs = document.getElementById("Xmark");
-var nameInput = document.getElementById("nameInput");
-var numInput = document.getElementById("numInput");
-var mailInput = document.getElementById("mailInput");
-var addressInput = document.getElementById("addressInput");
-var selectInput = document.getElementById("selectInput");
-var notesInput = document.getElementById("notesInput");
-var checkInput1 = document.getElementById("checkInput1");
-var checkInput2 = document.getElementById("checkInput2");
-var cancelButton = document.getElementById("cancelButton");
-var saveButton = document.getElementById("saveButton");
-var inputSearch = document.getElementById("inputSearch");
-var currentIndex = 0;
-var avatarColors = [
+const addContactBtn = document.getElementById("addContact");
+const inputsSection = document.getElementById("inputsSection");
+const closeInputs = document.getElementById("Xmark");
+const nameInput = document.getElementById("nameInput");
+const numInput = document.getElementById("numInput");
+const mailInput = document.getElementById("mailInput");
+const addressInput = document.getElementById("addressInput");
+const selectInput = document.getElementById("selectInput");
+const notesInput = document.getElementById("notesInput");
+const checkInput1 = document.getElementById("checkInput1");
+const checkInput2 = document.getElementById("checkInput2");
+const cancelButton = document.getElementById("cancelButton");
+const saveButton = document.getElementById("saveButton");
+const inputSearch = document.getElementById("inputSearch");
+let currentIndex = 0;
+const avatarColors = [
   "#EF4444",
   "#3B82F6",
   "#10B981",
@@ -22,38 +22,42 @@ var avatarColors = [
   "#EC4899",
   "#06B6D4",
 ];
-
-// display addContactBtn
-addContactBtn.addEventListener("click", function () {
-  inputsSection.classList.remove("d-none");
-});
-
-// closeInputsSection
-closeInputs.addEventListener("click", function () {
-  inputsSection.classList.add("d-none");
-});
-cancelButton.addEventListener("click", function () {
-  inputsSection.classList.add("d-none");
-});
-
-var contactList = [];
-if (localStorage.getItem("contactContainer") !== null) {
-  contactList = JSON.parse(localStorage.getItem("contactContainer"));
-}
+let contactList = JSON.parse(localStorage.getItem("contactContainer")) || [];
+let isEditing = false;
 displayContact();
 displaySidebar();
 updateCounts();
 
-saveButton.addEventListener("click", function () {
-  if (isEditing) {
-    updateContact();
-  } else {
-    saveContact();
-  }
+////////////////////events //////////////////////
+
+addContactBtn.addEventListener("click", () => {
+  inputsSection.classList.remove("d-none");
 });
 
+[closeInputs, cancelButton].forEach((btn) =>
+  btn.addEventListener("click", closeForm),
+);
+
+saveButton.addEventListener("click", () =>
+  isEditing ? updateContact() : saveContact(),
+);
+
+inputSearch.addEventListener("input", displayContact);
+
+[nameInput, numInput, mailInput].forEach((input) =>
+  input.addEventListener("input", () => validation(input)),
+);
+
+//////////////////functions /////////////////////
+
+function closeForm() {
+  inputsSection.classList.add("d-none");
+  isEditing = false;
+  clearForm();
+}
+
 function saveContact() {
-  var duplicateNum = false;
+  let duplicateNum = false;
 
   for (let i = 0; i < contactList.length; i++) {
     if (contactList[i].num === numInput.value.trim()) {
@@ -111,14 +115,14 @@ function saveContact() {
     });
   } else {
     if (!validation(nameInput)) {
-      Swal.fire({
+      return Swal.fire({
         title: "Missing Name",
         text: "Please enter a name for the contact!",
         icon: "error",
         confirmButtonText: "ok",
       });
     } else if (!validation(numInput)) {
-      Swal.fire({
+      return Swal.fire({
         title: "Missing Phone",
         text: "Please enter a phone nummber!",
         icon: "error",
@@ -129,29 +133,23 @@ function saveContact() {
 }
 
 function clearForm() {
-  nameInput.value = null;
-  numInput.value = null;
-  mailInput.value = null;
-  addressInput.value = null;
+  [nameInput, numInput, mailInput, addressInput, notesInput].forEach(
+    (i) => (i.value = ""),
+  );
   selectInput.selectedIndex = 0;
-  notesInput.value = null;
   checkInput1.checked = false;
   checkInput2.checked = false;
-
-  nameInput.classList.remove("is-valid", "is-invalid");
-  numInput.classList.remove("is-valid", "is-invalid");
-  mailInput.classList.remove("is-valid", "is-invalid");
+  [nameInput, numInput, mailInput].forEach((i) =>
+    i.classList.remove("is-valid", "is-invalid"),
+  );
 }
 
-inputSearch.addEventListener("input", function () {
-  displayContact();
-});
 function displayContact() {
-  var searchValue = inputSearch.value;
-  var box = "";
+  let searchValue = inputSearch.value;
+  let box = "";
   for (let i = 0; i < contactList.length; i++) {
-    bgColor = contactList[i].color;
-    var firstChar = contactList[i].name.charAt(0).toUpperCase();
+    let bgColor = contactList[i].color;
+    let firstChar = contactList[i].name.charAt(0).toUpperCase();
     if (
       contactList[i].name.toLowerCase().includes(searchValue.toLowerCase()) ||
       contactList[i].num.toLowerCase().includes(searchValue.toLowerCase()) ||
@@ -385,16 +383,16 @@ function emergencyBtn(i) {
 }
 
 function displaySidebar() {
-  var favBox = document.querySelector(".fav-contact");
-  var emgBox = document.querySelector(".emg-contact");
+  let favBox = document.querySelector(".fav-contact");
+  let emgBox = document.querySelector(".emg-contact");
 
-  var favHTML = "";
-  var emgHTML = "";
+  let favHTML = "";
+  let emgHTML = "";
 
   for (let i = 0; i < contactList.length; i++) {
-    bgColor = contactList[i].color;
-    var firstChar = contactList[i].name.charAt(0).toUpperCase();
-    var favItemHTML = `
+    let bgColor = contactList[i].color;
+    let firstChar = contactList[i].name.charAt(0).toUpperCase();
+    let favItemHTML = `
         <div class="favItemHTML mb-2 p-3 rounded-3 d-flex align-items-center gap-3" style="background-color: #F9FAFB;">
                     <div class="rounded-3 text-white  d-flex align-items-center justify-content-center fw-bold" style="width: 35px; height: 35px; background-color: ${bgColor};">
                      ${firstChar}
@@ -409,7 +407,7 @@ function displaySidebar() {
                   </div>
         `;
 
-    var emgItemHTML = `
+    let emgItemHTML = `
         <div class="emgItemHTML mb-2 p-3 rounded-3 d-flex align-items-center gap-3" style="background-color: #F9FAFB;">
                     <div class="rounded-3 text-white d-flex align-items-center justify-content-center fw-bold" style="width: 35px; height: 35px; background-color: ${bgColor};">
                       ${firstChar}
@@ -439,19 +437,13 @@ function displaySidebar() {
 }
 
 function updateCounts() {
-  var total = contactList.length;
-  var favCount = 0;
-  var emgCount = 0;
-  for (let i = 0; i < contactList.length; i++) {
-    if (contactList[i].check1) favCount++;
-    if (contactList[i].check2) emgCount++;
-  }
-
-  document.getElementById("totalNum").innerHTML = total;
+  const favCount = contactList.filter((c) => c.check1).length;
+  const emgCount = contactList.filter((c) => c.check2).length;
+  document.getElementById("totalNum").innerHTML = contactList.length;
   document.getElementById("favNum").innerHTML = favCount;
   document.getElementById("emgNum").innerHTML = emgCount;
   document.getElementById("pragraph").innerHTML =
-    `Manage and organize your ${total} contacts`;
+    `Manage and organize your ${contactList.length} contacts`;
 }
 
 function deletecontact(i) {
@@ -481,10 +473,8 @@ function deletecontact(i) {
   });
 }
 
-var isEditing = false;
 function setcontact(i) {
   isEditing = true;
-  inputsSection.classList.remove("d-none");
   currentIndex = i;
   nameInput.value = contactList[i].name;
   numInput.value = contactList[i].num;
@@ -494,6 +484,7 @@ function setcontact(i) {
   notesInput.value = contactList[i].notes;
   checkInput1.checked = contactList[i].check1;
   checkInput2.checked = contactList[i].check2;
+  inputsSection.classList.remove("d-none");
 }
 
 function updateContact() {
@@ -529,7 +520,7 @@ function updateContact() {
     inputsSection.classList.add("d-none");
     Swal.fire({
       title: "Updated!",
-      text: "contact has been added successfully👍",
+      text: "contact has been updated successfully👍",
       icon: "success",
       timer: 1500,
       showConfirmButton: false,
@@ -553,21 +544,10 @@ function updateContact() {
   }
 }
 
-//validation
-nameInput.addEventListener("input", function () {
-  validation(this);
-});
-numInput.addEventListener("input", function () {
-  validation(this);
-});
-mailInput.addEventListener("input", function () {
-  validation(this);
-});
-
 function validation(element) {
-  var text = element.value;
-  var regex = {
-    nameInput: /^[A-Z][a-zA-Z]{1,10}(\s[A-Z][a-zA-Z]{1,10})*$/,
+  let text = element.value;
+  const regex = {
+    nameInput: /^[a-zA-Z\s]{5,50}$/,
     numInput: /^01[0125][0-9]{8}$/,
     mailInput: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.com$/,
   };
